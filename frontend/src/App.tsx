@@ -14,10 +14,12 @@ const api = {
     const response = await fetch(`${API_BASE}/auth/login`, {
       method: 'POST',
       body: formData,
+      // 移除 Content-Type header，讓瀏覽器自動設定
     });
     
     if (!response.ok) {
-      throw new Error('登入失敗');
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || '登入失敗');
     }
     
     return response.json();
