@@ -69,7 +69,7 @@ const Login = () => {
           <span>還沒有帳號？</span>
           <button 
             type="button" 
-            onClick={() => window.location.href = '/register'}
+            onClick={() => window.location.href = '/booking-system/register'}
             style={{ 
               background: 'none', 
               border: 'none', 
@@ -136,7 +136,7 @@ const Register = () => {
       if (response.ok) {
         setSuccess('註冊成功！正在跳轉到登入頁面...');
         setTimeout(() => {
-          window.location.href = '/login';
+          window.location.href = '/booking-system/login';
         }, 2000);
       } else {
         const errorData = await response.json();
@@ -208,7 +208,7 @@ const Register = () => {
           <span>已有帳號？</span>
           <button 
             type="button" 
-            onClick={() => window.location.href = '/login'}
+            onClick={() => window.location.href = '/booking-system/login'}
             style={{ 
               background: 'none', 
               border: 'none', 
