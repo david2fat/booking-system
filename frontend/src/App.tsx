@@ -35,7 +35,7 @@ const Login = () => {
     try {
       const result = await api.login(email, password);
       localStorage.setItem('token', result.access_token);
-      window.location.href = '/';
+      window.location.href = '/booking-system/';
     } catch (err: any) {
       setError(err.message);
     }
@@ -510,7 +510,7 @@ const Booking = () => {
         if (response.status === 401) {
           setError('登入已過期，請重新登入');
           localStorage.removeItem('token');
-          window.location.href = '/login';
+          window.location.href = '/booking-system/login';
           return;
         }
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -1010,12 +1010,12 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
-    window.location.href = '/login';
+    window.location.href = '/booking-system/login';
   };
 
   if (!isLoggedIn) {
     return (
-      <Router>
+      <Router basename="/booking-system">
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -1026,7 +1026,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <Router basename="/booking-system">
       <div className="App">
         <Sidebar onLogout={handleLogout} />
         
