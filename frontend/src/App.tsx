@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import './App.css';
 
 // 簡單的 API 服務
-const API_BASE = 'http://localhost:8008/api/v1';
+const API_BASE = 'https://david2fat-booking-system-299d0c6a305f.herokuapp.com/api/v1';
 
 const api = {
   login: async (email: string, password: string) => {
@@ -242,7 +242,7 @@ const Home = () => {
           return;
         }
         
-        const response = await fetch('http://localhost:8008/api/v1/bookings/', {
+        const response = await fetch('https://david2fat-booking-system-299d0c6a305f.herokuapp.com/api/v1/bookings/', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -343,7 +343,7 @@ const Booking = () => {
         return;
       }
       
-      const response = await fetch('http://localhost:8008/api/v1/bookings/', {
+      const response = await fetch('https://david2fat-booking-system-299d0c6a305f.herokuapp.com/api/v1/bookings/', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -387,7 +387,7 @@ const Booking = () => {
           notes: ''
         };
         const token = localStorage.getItem('token');
-        const customerResponse = await fetch('http://localhost:8008/api/v1/customers/', {
+        const customerResponse = await fetch('https://david2fat-booking-system-299d0c6a305f.herokuapp.com/api/v1/customers/', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -413,7 +413,7 @@ const Booking = () => {
       };
       
       const token = localStorage.getItem('token');
-      await fetch('http://localhost:8008/api/v1/bookings/', {
+      await fetch('https://david2fat-booking-system-299d0c6a305f.herokuapp.com/api/v1/bookings/', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
