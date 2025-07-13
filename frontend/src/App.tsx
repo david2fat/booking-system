@@ -460,6 +460,32 @@ const Home = () => {
           <p>支援多員工同時管理</p>
         </div>
       </div>
+
+      {/* 新增登入註冊按鈕 */}
+      <div style={{ textAlign: 'center', marginTop: '40px', padding: '20px', background: '#f8f9fa', borderRadius: '12px' }}>
+        <h3 style={{ marginBottom: '20px', color: '#2c3e50' }}>開始使用預約系統</h3>
+        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button 
+            onClick={() => window.location.href = '/booking-system/login'}
+            className="btn btn-primary"
+            style={{ minWidth: '120px' }}
+          >
+            立即登入
+          </button>
+          <button 
+            onClick={() => window.location.href = '/booking-system/register'}
+            className="btn"
+            style={{ 
+              minWidth: '120px',
+              background: 'white',
+              color: '#667eea',
+              border: '2px solid #667eea'
+            }}
+          >
+            立即註冊
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
