@@ -65,6 +65,162 @@ const Login = () => {
         </div>
         {error && <p className="error">{error}</p>}
         <button type="submit" className="btn btn-primary">登入</button>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <span>還沒有帳號？</span>
+          <button 
+            type="button" 
+            onClick={() => window.location.href = '/register'}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              color: '#1890ff', 
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              marginLeft: '10px'
+            }}
+          >
+            立即註冊
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+// 註冊組件
+const Register = () => {
+  const [formData, setFormData] = useState({
+    full_name: '',
+    username: '',
+    email: '',
+    password: '',
+    confirm_password: ''
+  });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (formData.password !== formData.confirm_password) {
+      setError('密碼確認不一致');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError('密碼至少需要6個字元');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE}/auth/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          full_name: formData.full_name,
+          username: formData.username,
+          email: formData.email,
+          password: formData.password
+        }),
+      });
+
+      if (response.ok) {
+        setSuccess('註冊成功！正在跳轉到登入頁面...');
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 2000);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.detail || '註冊失敗');
+      }
+    } catch (err: any) {
+      setError('註冊失敗，請稍後再試');
+    }
+  };
+
+  return (
+    <div className="page">
+      <h1>註冊帳號</h1>
+      <form onSubmit={handleRegister} className="booking-form">
+        <div className="form-group">
+          <label>姓名：</label>
+          <input
+            type="text"
+            name="full_name"
+            value={formData.full_name}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>使用者名稱：</label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>電子郵件：</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>密碼：</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>確認密碼：</label>
+          <input
+            type="password"
+            name="confirm_password"
+            value={formData.confirm_password}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
+        {error && <p className="error">{error}</p>}
+        {success && <p style={{ color: 'green' }}>{success}</p>}
+        <button type="submit" className="btn btn-primary">註冊</button>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <span>已有帳號？</span>
+          <button 
+            type="button" 
+            onClick={() => window.location.href = '/login'}
+            style={{ 
+              background: 'none', 
+              border: 'none', 
+              color: '#1890ff', 
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              marginLeft: '10px'
+            }}
+          >
+            立即登入
+          </button>
+        </div>
       </form>
     </div>
   );
@@ -862,6 +1018,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="*" element={<Login />} />
         </Routes>
       </Router>
