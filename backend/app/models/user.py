@@ -27,5 +27,4 @@ class User(Base):
     
     # 關聯關係
     stores = relationship("Store", back_populates="owner")
-    bookings = relationship("Booking", back_populates="customer")
     payments = relationship("Payment", back_populates="user") 

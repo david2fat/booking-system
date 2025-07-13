@@ -1,8 +1,15 @@
 from typing import Optional
 from sqlalchemy.orm import Session
-from app.core.security import get_password_hash, verify_password
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
+
+def get_password_hash(password: str) -> str:
+    from app.core.security import pwd_context
+    return pwd_context.hash(password)
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    from app.core.security import pwd_context
+    return pwd_context.verify(plain_password, hashed_password)
 
 def get_user(db: Session, user_id: int) -> Optional[User]:
     return db.query(User).filter(User.id == user_id).first()

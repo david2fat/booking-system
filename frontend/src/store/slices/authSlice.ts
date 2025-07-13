@@ -28,7 +28,15 @@ const initialState: AuthState = {
 export const login = createAsyncThunk(
   'auth/login',
   async (credentials: { email: string; password: string }) => {
-    const response = await axios.post('/api/v1/auth/login', credentials);
+    const formData = new FormData();
+    formData.append('username', credentials.email);
+    formData.append('password', credentials.password);
+    
+    const response = await axios.post('/api/v1/auth/login', formData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
     return response.data;
   }
 );

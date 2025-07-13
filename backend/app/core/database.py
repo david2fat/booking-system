@@ -5,7 +5,7 @@ from app.core.config import settings
 
 # 建立資料庫引擎
 engine = create_engine(
-    settings.DATABASE_URL,
+    settings.database_url,
     pool_pre_ping=True,
     echo=True  # 開發環境顯示SQL語句
 )

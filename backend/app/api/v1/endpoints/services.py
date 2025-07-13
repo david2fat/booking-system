@@ -18,7 +18,9 @@ def read_services(
     """
     取得所有服務列表
     """
-    return []
+    from app.models.service import Service as ServiceModel
+    services = db.query(ServiceModel).offset(skip).limit(limit).all()
+    return services
 
 @router.post("/", response_model=Service)
 def create_service(

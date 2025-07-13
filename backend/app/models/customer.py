@@ -7,7 +7,12 @@ class Customer(Base):
     __tablename__ = "customers"
     
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    name = Column(String, nullable=False)  # 客戶姓名
+    phone = Column(String)  # 電話
+    email = Column(String)  # 電子郵件
+    address = Column(String)  # 地址
+    notes = Column(Text)  # 備註
+    store_id = Column(Integer, ForeignKey("stores.id"))  # 所屬店舖
     points = Column(Integer, default=0)  # 會員積分
     membership_level = Column(String, default="bronze")  # bronze, silver, gold, platinum
     total_spent = Column(Numeric(10, 2), default=0)  # 總消費金額
@@ -18,5 +23,6 @@ class Customer(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     # 關聯關係
-    user = relationship("User")
-    referrals = relationship("Customer", backref="referrer", remote_side=[id]) 
+    store = relationship("Store")
+    referrals = relationship("Customer", backref="referrer", remote_side=[id])
+    bookings = relationship("Booking", back_populates="customer") 

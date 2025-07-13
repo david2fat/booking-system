@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.database import Base
 import enum
+from fastapi.middleware.cors import CORSMiddleware
 
 class BookingStatus(str, enum.Enum):
     PENDING = "pending"
@@ -26,13 +27,13 @@ class Booking(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
     # 外鍵關係
-    customer_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    customer_id = Column(Integer, ForeignKey("customers.id"), nullable=False)
     store_id = Column(Integer, ForeignKey("stores.id"), nullable=False)
     service_id = Column(Integer, ForeignKey("services.id"), nullable=False)
     employee_id = Column(Integer, ForeignKey("employees.id"))
     
     # 關聯關係
-    customer = relationship("User", back_populates="bookings")
+    customer = relationship("Customer", back_populates="bookings")
     store = relationship("Store", back_populates="bookings")
     service = relationship("Service", back_populates="bookings")
     employee = relationship("Employee", back_populates="bookings")

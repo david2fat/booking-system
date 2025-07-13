@@ -1,84 +1,118 @@
 # 線上預約系統
 
-一個完整的線上預約管理系統，支援多店舖、多員工管理，包含網店功能和手機應用程式。
+一個完整的線上預約管理系統，包含前後端分離架構。
 
 ## 功能特色
 
-### 核心預約功能
-- ✅ 線上預約系統
+- ✅ 線上預約管理
 - ✅ 時間表管理
-- ✅ QR Code確認
-- ✅ 服務額外收費
+- ✅ QR Code 確認
 - ✅ 多員工帳號
 - ✅ 多店舖管理
-- ✅ 多員工管理
-
-### 網店功能
-- ✅ 店主APP
-- ✅ 網店手機應用程式
-- ✅ 線上收款
-- ✅ 線下收款
+- ✅ 網店功能
+- ✅ 線上線下收款
 - ✅ 促銷活動
-- ✅ 推廣活動
-- ✅ 會員積分計劃
+- ✅ 會員積分
 - ✅ 推薦計劃
 - ✅ 數據分析
 - ✅ 客戶管理
-- ✅ 免費圖庫
 - ✅ 通知中心
 
 ## 技術架構
 
-### 後端 (Python FastAPI)
-- **框架**: FastAPI
-- **資料庫**: PostgreSQL + Redis
+### 後端 (Backend)
+- **框架**: FastAPI (Python)
+- **資料庫**: SQLite
+- **ORM**: SQLAlchemy
 - **認證**: JWT
-- **支付**: Stripe
-- **檔案儲存**: AWS S3
-- **通知**: Firebase Cloud Messaging
+- **API 文件**: Swagger UI
 
-### 前端 (React)
-- **框架**: React 18 + TypeScript
+### 前端 (Frontend)
+- **框架**: React 18
+- **語言**: TypeScript
 - **狀態管理**: Redux Toolkit
-- **UI框架**: Ant Design
 - **路由**: React Router
-- **HTTP客戶端**: Axios
+- **UI 組件**: Ant Design
+- **HTTP 客戶端**: Axios
 
-### 手機應用 (React Native)
-- **框架**: React Native + TypeScript
-- **UI框架**: React Native Elements
-- **狀態管理**: Redux Toolkit
+## 快速啟動
 
-## 快速開始
+### 1. 克隆專案
+```bash
+git clone https://github.com/你的用戶名/booking-system.git
+cd booking-system
+```
 
-### 後端設定
+### 2. 啟動後端
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+source venv/bin/activate  # macOS/Linux
+# 或 venv\Scripts\activate  # Windows
 pip install -r requirements.txt
-uvicorn main:app --reload
+python -m uvicorn main:app --host 0.0.0.0 --port 8008 --reload
 ```
 
-### 前端設定
+### 3. 啟動前端
 ```bash
 cd frontend
 npm install
 npm start
 ```
 
-### 手機應用設定
-```bash
-cd mobile-app
-npm install
-npx react-native run-android  # 或 run-ios
+## 訪問地址
+
+- **前端**: http://localhost:3003
+- **後端 API**: http://localhost:8008
+- **API 文件**: http://localhost:8008/docs
+
+## 專案結構
+
+```
+預約系統/
+├── backend/                 # FastAPI 後端
+│   ├── app/                # 應用模組
+│   ├── main.py             # 主入口文件
+│   ├── requirements.txt    # Python 依賴
+│   └── venv/              # 虛擬環境
+├── frontend/               # React 前端
+│   ├── src/               # 源代碼
+│   ├── public/            # 靜態文件
+│   └── package.json       # Node.js 依賴
+└── README.md              # 專案說明
 ```
 
-## API文檔
-啟動後端後，訪問 http://localhost:8000/docs 查看API文檔
+## 開發指南
+
+### 後端開發
+- API 端點在 `backend/app/routers/` 目錄
+- 資料模型在 `backend/app/models/` 目錄
+- 資料庫操作在 `backend/app/crud/` 目錄
+
+### 前端開發
+- 頁面組件在 `frontend/src/pages/` 目錄
+- 通用組件在 `frontend/src/components/` 目錄
+- Redux store 在 `frontend/src/store/` 目錄
 
 ## 部署
-詳細部署說明請參考 `docs/deployment.md`
+
+### 後端部署
+```bash
+cd backend
+pip install -r requirements.txt
+python -m uvicorn main:app --host 0.0.0.0 --port 8008
+```
+
+### 前端部署
+```bash
+cd frontend
+npm run build
+```
+
+## 貢獻
+
+歡迎提交 Issue 和 Pull Request！
 
 ## 授權
+
 MIT License 

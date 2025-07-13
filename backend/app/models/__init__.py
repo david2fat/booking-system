@@ -1,3 +1,4 @@
+from app.core.database import Base
 from .user import User
 from .store import Store
 from .service import Service
@@ -9,8 +10,9 @@ from .promotion import Promotion
 from .notification import Notification
 
 __all__ = [
+    "Base",
     "User",
-    "Store", 
+    "Store",
     "Service",
     "Booking",
     "Employee",
