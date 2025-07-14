@@ -229,7 +229,7 @@ const Register = () => {
 };
 
 // 側邊欄組件
-const Sidebar = ({ onLogout }: { onLogout: () => void }) => {
+const Sidebar = ({ onLogout, isOpen, onClose }: { onLogout: () => void; isOpen?: boolean; onClose?: () => void }) => {
   const location = useLocation();
   const [expandedMenus, setExpandedMenus] = useState<string[]>([]);
 
@@ -343,7 +343,7 @@ const Sidebar = ({ onLogout }: { onLogout: () => void }) => {
   ];
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isOpen ? 'show' : ''}`}>
       <div className="sidebar-header">
         <h2>預約系統</h2>
         <p>專業的預約管理平台</p>
@@ -464,7 +464,7 @@ const Home = () => {
       {/* 新增登入註冊按鈕 */}
       <div style={{ textAlign: 'center', marginTop: '40px', padding: '20px', background: '#f8f9fa', borderRadius: '12px' }}>
         <h3 style={{ marginBottom: '20px', color: '#2c3e50' }}>開始使用預約系統</h3>
-        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div className="btn-container" style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
           <button 
             onClick={() => window.location.href = '/booking-system/login'}
             className="btn btn-primary"
@@ -1029,6 +1029,7 @@ const BookingSettings = () => (
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -1039,6 +1040,10 @@ function App() {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     window.location.href = '/booking-system/login';
+  };
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
   };
 
   if (!isLoggedIn) {
@@ -1056,7 +1061,21 @@ function App() {
   return (
     <Router basename="/booking-system">
       <div className="App">
-        <Sidebar onLogout={handleLogout} />
+        {/* 手機版選單按鈕 */}
+        <button 
+          className="mobile-menu-btn" 
+          onClick={toggleSidebar}
+        >
+          ☰
+        </button>
+        
+        {/* 手機版遮罩 */}
+        <div 
+          className={`mobile-overlay ${sidebarOpen ? 'show' : ''}`}
+          onClick={toggleSidebar}
+        />
+        
+        <Sidebar onLogout={handleLogout} isOpen={sidebarOpen} onClose={toggleSidebar} />
         
         <main className="main-content">
           <Routes>
